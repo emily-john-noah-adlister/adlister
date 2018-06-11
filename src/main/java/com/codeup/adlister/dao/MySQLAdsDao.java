@@ -84,4 +84,13 @@ public class MySQLAdsDao implements Ads {
                 ad.getDescription()
         );
     }
+
+    public List<Ad> displayUserCreatedAds(Long search) throws SQLException {
+        String sql = "SELECT * FROM ads WHERE userId = ?";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setLong(1, search);
+        ResultSet rs = stmt.executeQuery();
+        return createAdsFromDB(rs);
+    }
+
 }
