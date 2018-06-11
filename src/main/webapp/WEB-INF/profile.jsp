@@ -25,7 +25,13 @@
             <div class="card-body">
                 <h5><c:out value="${ad.title}"/></h5>
                 <p><c:out value="${ad.description}"/></p>
-                <p><c:out value="${ad.userId}"/></p>
+                <%--<p><c:out value="${ad.userId}"/></p>--%>
+                <form action="/ads/edit" method="POST">
+                    <button type="submit" id="edit" name="edit" value="${ad.id}" class="btn btn-warning">Edit</button>
+                </form>
+                <form action="/ads/delete" method="POST">
+                    <button type="submit" id="delete" name="delete" value="${ad.id}" class="btn btn-danger">Delete</button>
+                </form>
             </div>
         </div>
     </c:forEach>

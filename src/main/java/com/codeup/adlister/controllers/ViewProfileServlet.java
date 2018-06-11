@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 
 @WebServlet(name = "controllers.ViewProfileServlet", urlPatterns = "/profile")
 public class ViewProfileServlet extends HttpServlet {
@@ -21,6 +20,5 @@ public class ViewProfileServlet extends HttpServlet {
         request.getSession().setAttribute("userAds", DaoFactory.getAdsDao().displayUsersAds(userId));
         request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
     }
-
 }
 

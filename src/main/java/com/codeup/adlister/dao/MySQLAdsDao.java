@@ -1,6 +1,7 @@
 package com.codeup.adlister.dao;
 
 import com.codeup.adlister.models.Ad;
+import com.codeup.adlister.models.User;
 import com.mysql.cj.jdbc.Driver;
 
 import java.io.FileInputStream;
@@ -85,6 +86,17 @@ public class MySQLAdsDao implements Ads {
         );
     }
 
+    private Ad extractAd(ResultSet rs) throws SQLException {
+        if (! rs.next()) {
+            return null;
+        }
+        return new Ad(
+                rs.getLong("id"),
+                rs.getString("title"),
+                rs.getString("description")
+        );
+    }
+
     @Override
     public List<Ad> displayUsersAds(Long search){
         String sql = "SELECT * FROM ads WHERE user_id = ?";
@@ -98,5 +110,47 @@ public class MySQLAdsDao implements Ads {
             throw new RuntimeException("Could not display ads",e);
         }
     }
+
+    @Override
+    public void delete(Long id) {
+        String sql = "DELETE FROM ads WHERE id = ?";
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement(sql);
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to delete ad", e);
+        }
+    }
+
+    @Override
+    public void update(Ad ad) {
+        String sql = "UPDATE ads SET title = ?, description = ? WHERE id = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, ad.getTitle());
+            stmt.setString(2, ad.getDescription());
+            stmt.setLong(3, ad.getId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to update ad", e);
+        }
+    }
+
+    @Override
+    public Ad getAdFromId(Long id) {
+        String sql = "SELECT * FROM ads WHERE id = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setLong(1,id);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            return extractAd(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Could not find user by ID", e);
+        }
+    }
+
 
 }
