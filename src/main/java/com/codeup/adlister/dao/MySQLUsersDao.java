@@ -48,6 +48,9 @@ public class MySQLUsersDao implements Users {
         }
     }
 
+
+
+
     @Override
     public Long insert(User user) {
         String query = "INSERT INTO users(username, email, password) VALUES (?, ?, ?)";
@@ -64,4 +67,22 @@ public class MySQLUsersDao implements Users {
             throw new RuntimeException("Error creating new user", e);
         }
     }
+
+
+    @Override
+    public void replace(User user) {
+        String query = "UPDATE users SET username = ?, email = ?, password = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getEmail());
+            stmt.setString(3, user.getPassword());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to update profile", e);
+        }
+    }
+
 }
+}
+

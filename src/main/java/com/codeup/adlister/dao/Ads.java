@@ -11,6 +11,9 @@ public interface Ads {
     // insert a new ad and return the new ad's id
     Long insert(Ad ad);
 
+
+    List<Ad> resultSearch(String title);
+
     List<Ad> displayUsersAds(Long userId);
 
     void delete(Long id);
@@ -18,4 +21,5 @@ public interface Ads {
     void update(Ad ad);
 
     Ad getAdFromId(Long id);
+
 }
