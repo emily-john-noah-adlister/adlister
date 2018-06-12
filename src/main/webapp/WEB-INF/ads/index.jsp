@@ -17,7 +17,7 @@
             Ad # <c:out value="${ad.id}"/>
         </div>
         <div class="card-body">
-            <a href="<c:url value="/ads/showad?id=${ad.id}"/>">${ad.title}</a>
+            <a href="<c:url value="/ads/showad?id=${ad.id}"/>"><c:out value="${ad.title}"/></a>
         </div>
     </div>
 </c:forEach>
