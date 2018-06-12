@@ -8,8 +8,8 @@
 <body>
 <jsp:include page="../partials/navbar.jsp" />
 <div class="container">
-    <h1>Create a new Ad</h1>
-    <form action="/ads/edit" method="post">
+    <h1>Edit Ad</h1>
+    <form action="/ads/update" method="POST">
         <div class="form-group">
             <label for="title">Title</label>
             <input id="title" name="title" class="form-control" type="text" placeholder="${editableAd.title}">
