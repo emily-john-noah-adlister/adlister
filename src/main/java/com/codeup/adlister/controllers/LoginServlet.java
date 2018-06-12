@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import com.codeup.adlister.util.Password;
+import com.mysql.cj.api.Session;
 import org.apache.commons.lang3.StringUtils;
 
 @WebServlet(name = "controllers.LoginServlet", urlPatterns = "/login")
@@ -42,7 +43,10 @@ public class LoginServlet extends HttpServlet {
             request.getSession().setAttribute("username", user.getUsername());
             request.getSession().setAttribute("id", user.getId());
             response.sendRedirect("/profile");
+
+
         } else {
+            request.setAttribute("error", "Invalid username or password");
             response.sendRedirect("/login");
         }
     }

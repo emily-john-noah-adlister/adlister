@@ -85,6 +85,7 @@ public class MySQLAdsDao implements Ads {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM ads WHERE id = ?");
             stmt.setLong(1, id);
             ResultSet rs = stmt.executeQuery();
+
             return extractAd(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error finding an individual ad", e);
@@ -127,6 +128,8 @@ public class MySQLAdsDao implements Ads {
                 rs.getString("description")
         );
     }
+
+
 
     private List<Ad> createAdsFromResults(ResultSet rs) throws SQLException {
         List<Ad> ads = new ArrayList<>();

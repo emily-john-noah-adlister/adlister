@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -5,6 +6,8 @@
     <jsp:include page="partials/head.jsp">
         <jsp:param name="title" value="Please Log In" />
     </jsp:include>
+
+
 </head>
 <body>
 
@@ -23,6 +26,8 @@
             </div>
             <input type="submit" class="btn btn-primary btn-block" value="Log In">
         </form>
+
     </div>
+
 </body>
 </html>
