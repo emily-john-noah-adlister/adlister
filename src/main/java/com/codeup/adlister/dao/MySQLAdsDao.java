@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MySQLAdsDao implements Ads {
+    public void main(String[] args) {
+        System.out.println(resultSearch("xbox"));
+    }
     private Connection connection = null;
 
     public MySQLAdsDao(Config config){
@@ -75,6 +78,21 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+    @Override
+    public List<Ad> resultSearch(String title) {
+        String query = "SELECT * FROM ads WHERE title LIKE ?";
+        String searchTitleWithWildCards = "%" + title + "%";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1, searchTitleWithWildCards);
+            stmt.executeQuery();
+            ResultSet rs = stmt.executeQuery();
+            return createAdsFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error finding a ad by title", e);
+        }
+    }
+
     private String createInsertQuery(Ad ad) {
         String sql = "INSERT INTO ads(user_id, title, description) VALUES(%d, '%s', '%s')";
         return String.format(
@@ -84,4 +102,22 @@ public class MySQLAdsDao implements Ads {
                 ad.getDescription()
         );
     }
+
+    private Ad extractAd(ResultSet rs) throws SQLException {
+        return new Ad(
+                rs.getLong("id"),
+                rs.getLong("user_id"),
+                rs.getString("title"),
+                rs.getString("description")
+        );
+    }
+
+    private List<Ad> createAdsFromResults(ResultSet rs) throws SQLException {
+        List<Ad> ads = new ArrayList<>();
+        while (rs.next()){
+            ads.add(extractAd(rs));
+        }
+        return ads;
+    }
+
 }
