@@ -74,6 +74,28 @@ public class MySQLAdsDao implements Ads {
             throw new RuntimeException("Could not create ad.", e);
         }
     }
+    private Ad extractAd(ResultSet rs) throws SQLException {
+        return new Ad(
+                rs.getLong("id"),
+                rs.getLong("user_id"),
+                rs.getString("title"),
+                rs.getString("description")
+        );
+    }
+    @Override
+    public Ad findAd(Long id) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM ads WHERE id = ?");
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (! rs.next()) {
+                throw new RuntimeException(String.format("No ad found for the id: %s", id));
+            }
+            return extractAd(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error finding an individual ad", e);
+        }
+    }
 
     private String createInsertQuery(Ad ad) {
         String sql = "INSERT INTO ads(user_id, title, description) VALUES(%d, '%s', '%s')";
@@ -85,3 +107,5 @@ public class MySQLAdsDao implements Ads {
         );
     }
 }
+
+
