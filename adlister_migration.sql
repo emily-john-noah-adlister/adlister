@@ -15,13 +15,15 @@ CREATE TABLE IF NOT EXISTS users(
   email VARCHAR(100),
   password VARCHAR(100),
   username VARCHAR(100),
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  UNIQUE (username)
 );
 
 CREATE TABLE IF NOT EXISTS ads(
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   title VARCHAR(100),
   description TEXT,
+  image_url VARCHAR(500),
   user_id INT UNSIGNED NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES users(id)

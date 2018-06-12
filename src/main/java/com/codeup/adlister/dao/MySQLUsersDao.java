@@ -49,8 +49,6 @@ public class MySQLUsersDao implements Users {
     }
 
 
-
-
     @Override
     public Long insert(User user) {
         String query = "INSERT INTO users(username, email, password) VALUES (?, ?, ?)";
@@ -71,18 +69,28 @@ public class MySQLUsersDao implements Users {
 
     @Override
     public void replace(User user) {
-        String query = "UPDATE users SET username = ?, email = ?, password = ?";
+        String query = "UPDATE users SET username = ?, email = ?, password = ? WHERE id = ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getPassword());
+            stmt.setLong(4, user.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Unable to update profile", e);
         }
     }
+    public User findByUserId(Long id) {
+        String query = "SELECT * FROM users WHERE id = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setLong(1, id);
+            return extractUser(stmt.executeQuery());
+        } catch (SQLException e) {
+            throw new RuntimeException("Error finding a user by username", e);
+        }
+    }
+}
 
-}
-}
 
