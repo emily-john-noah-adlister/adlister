@@ -80,6 +80,19 @@ public class MySQLAdsDao implements Ads {
     }
 
     @Override
+    public Ad findAd(Long id) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM ads WHERE id = ?");
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            return extractAd(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error finding an individual ad", e);
+        }
+    }
+
+    @Override
     public List<Ad> resultSearch(String title) {
         String query = "SELECT * FROM ads WHERE title LIKE ?";
         String searchTitleWithWildCards = "%" + title + "%";
@@ -115,6 +128,8 @@ public class MySQLAdsDao implements Ads {
                 rs.getString("description")
         );
     }
+
+
 
     private List<Ad> createAdsFromResults(ResultSet rs) throws SQLException {
         List<Ad> ads = new ArrayList<>();
@@ -179,3 +194,5 @@ public class MySQLAdsDao implements Ads {
         }
     }
 }
+
+
