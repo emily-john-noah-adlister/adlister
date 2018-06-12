@@ -12,7 +12,7 @@
     <form action="/ads/edit" method="post">
         <div class="form-group">
             <label for="title">Title</label>
-            <input id="title" name="title" class="form-control" type="text">
+            <input id="title" name="title" class="form-control" type="text" placeholder="${editableAd.title}">
         </div>
         <div class="form-group">
             <label for="description">Description</label>
