@@ -1,9 +1,11 @@
 package com.codeup.adlister.dao;
 
+import com.codeup.adlister.models.Ad;
 import com.codeup.adlister.models.User;
 import com.mysql.cj.jdbc.Driver;
 
 import java.sql.*;
+import java.util.List;
 
 public class MySQLUsersDao implements Users {
 
@@ -66,9 +68,10 @@ public class MySQLUsersDao implements Users {
         }
     }
 
+
     @Override
     public void replace(User user) {
-        String query = "UPDATE users SET username = ?, emai = ?, password = ?";
+        String query = "UPDATE users SET username = ?, email = ?, password = ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setString(1, user.getUsername());
@@ -81,5 +84,5 @@ public class MySQLUsersDao implements Users {
     }
 
 }
-
+}
 
