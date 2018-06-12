@@ -19,6 +19,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/profile">Profile</a>
                 </li>
+                <li>
+                    <a class="nav-link" href="/update">Update Profile</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/ads/create">Create Ad</a>
                 </li>
@@ -27,6 +30,13 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>
+                </li>
+                <li>
+                    <form action="/ads/search" method="GET">
+                        <div class="form-group">
+                            <input type="text" name="title" id="search" placeholder="Search for Ad">
+                        </div>
+                    </form>
                 </li>
             </c:if>
         </ul>
