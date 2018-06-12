@@ -59,10 +59,6 @@ public class MySQLUsersDao implements Users {
         }
     }
 
-
-
-
-
     @Override
     public Long insert(User user) {
         String query = "INSERT INTO users(username, email, password) VALUES (?, ?, ?)";
@@ -80,11 +76,6 @@ public class MySQLUsersDao implements Users {
         }
     }
 
-
-
-
-
-
     @Override
     public void replace(User user) {
         String query = "UPDATE users SET username = ?, email = ?, password = ?";
@@ -100,5 +91,4 @@ public class MySQLUsersDao implements Users {
     }
 
 }
-
 
