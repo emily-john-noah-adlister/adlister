@@ -59,10 +59,6 @@ public class MySQLUsersDao implements Users {
         }
     }
 
-
-
-
-
     @Override
     public Long insert(User user) {
         String query = "INSERT INTO users(username, email, password) VALUES (?, ?, ?)";
@@ -79,11 +75,6 @@ public class MySQLUsersDao implements Users {
             throw new RuntimeException("Error creating new user", e);
         }
     }
-
-
-
-
-
 
     @Override
     public void replace(User user) {

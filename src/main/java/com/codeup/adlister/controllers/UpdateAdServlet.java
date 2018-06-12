@@ -18,14 +18,29 @@ public class UpdateAdServlet extends HttpServlet{
             response.sendRedirect("/login");
             return;
         }
-        request.getRequestDispatcher("/WEB-INF/ads/edit.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/ads/update.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        long adId = Long.parseLong(request.getParameter("edit"));
-        Ad ad = DaoFactory.getAdsDao().getAdFromId(adId);
+        long adId = Long.parseLong(request.getParameter("update"));
+        System.out.println("Ad id: " + adId);
+
+        String title = request.getParameter("title");
+        System.out.println("title is: " + title);
+        String description = request.getParameter("description");
+        System.out.println("Description is: " + description);
+
+        Ad ad = DaoFactory.getAdsDao().findAd(adId);
+        System.out.println(ad.getTitle());
+
+        ad.setTitle(title);
+
+        ad.setDescription(description);
+
+
         DaoFactory.getAdsDao().update(ad);
         response.sendRedirect("/profile");
     }
+
 
 }
