@@ -31,6 +31,8 @@ public class ShowAdServlet extends HttpServlet {
         req.setAttribute("user", user);
 
 
+
+
 ;
 
 
