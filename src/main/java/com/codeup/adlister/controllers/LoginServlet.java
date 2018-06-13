@@ -46,7 +46,8 @@ public class LoginServlet extends HttpServlet {
 
 
         } else {
-            request.setAttribute("error", "Invalid username or password");
+            String message = "Invalid login. Try again.";
+            request.setAttribute("message", message);
             response.sendRedirect("/login");
         }
     }
