@@ -21,7 +21,7 @@
             <div class="form-group">
                 <c:forEach var="cat" items="${categories}">
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="${cat.category}">
+                        <input type="checkbox" class="custom-control-input" name="category" id="${cat.category}" value="${cat.id}">
                         <label class="custom-control-label" for="${cat.category}">${cat.category}</label>
                     </div>
                 </c:forEach>
