@@ -35,10 +35,18 @@ public class RegisterServlet extends HttpServlet {
             response.sendRedirect("/register");
             return;
         }
-        String message = "Invalid input, please try again";
-        request.setAttribute("errorMessage", message);
-        password = Password.hash(password);
-        DaoFactory.getUsersDao().insert(new User(username, email, password));
-        response.sendRedirect("/login");
+
+        try {
+            String existingUser = DaoFactory.getUsersDao().findByUsername(username).getUsername();
+            if (existingUser != null) {
+                request.setAttribute("errorMessage", "Username already exists. Please use another username.");
+                request.getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
+            }
+        } catch (NullPointerException e) {
+
+            password = Password.hash(password);
+            DaoFactory.getUsersDao().insert(new User(username, email, password));
+            response.sendRedirect("/login");
+        }
     }
 }

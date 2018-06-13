@@ -43,6 +43,8 @@ public class LoginServlet extends HttpServlet {
             request.getSession().setAttribute("id", user.getId());
             response.sendRedirect("/profile");
         } else {
+            String message = "Invalid login. Try again.";
+            request.setAttribute("message", message);
             response.sendRedirect("/login");
         }
     }
