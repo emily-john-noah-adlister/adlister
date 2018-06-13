@@ -28,13 +28,22 @@ public class RegisterServlet extends HttpServlet {
 
         boolean validAttempt = (util.isNotBlank(username) && util.isNotBlank(email) && util.isNotBlank(password) & password.equals(passwordConfirmation));
         // validate input
+        boolean passwordsMatch = password.equals(passwordConfirmation);
 
-        if (!validAttempt) {
-            response.sendRedirect("/register");
+
+        if (!passwordsMatch) {
+            request.setAttribute("error","Passwords do not match.");
+        }else if (!validAttempt) {
+            request.setAttribute("error", "Invalid input. Please try again.");
+        }
+
+
+        if (!validAttempt || !passwordsMatch) {
+            request.getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
             return;
         }
-        String message = "Invalid input, please try again";
-        request.setAttribute("errorMessage", message);
+
+
         password = Password.hash(password);
         DaoFactory.getUsersDao().insert(new User(username, email, password));
         response.sendRedirect("/login");

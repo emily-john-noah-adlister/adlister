@@ -9,8 +9,8 @@
 
 <jsp:include page="partials/navbar.jsp" />
 <div class="container">
+    <jsp:include page="partials/errorMessages.jsp"/>
     <h1 id="login-message">Please Create an Account</h1>
-    <h2>${errorMessage}</h2>
     <form action="/register" method="POST">
         <div class="form-group">
             <label for="email">Email</label>

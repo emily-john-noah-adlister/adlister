@@ -13,6 +13,7 @@
 
     <jsp:include page="partials/navbar.jsp" />
     <div class="container">
+        <jsp:include page="/WEB-INF/partials/errorMessages.jsp"/>
         <h1 id="login-message">Please Log In</h1>
         <h2>${message}</h2>
         <form action="/login" method="POST">
