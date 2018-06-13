@@ -19,9 +19,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/profile">Profile</a>
                 </li>
-                <li>
-                    <a class="nav-link" href="/update">Update Profile</a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/ads/create">Create Ad</a>
                 </li>

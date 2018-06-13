@@ -21,9 +21,5 @@ public class DeleteAdServlet extends HttpServlet{
         DaoFactory.getAdsDao().delete(adId);
         response.sendRedirect("/profile");
     }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request,response);
-    }
 }
 

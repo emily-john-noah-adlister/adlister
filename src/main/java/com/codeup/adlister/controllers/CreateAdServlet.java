@@ -18,6 +18,7 @@ public class CreateAdServlet extends HttpServlet {
             response.sendRedirect("/login");
             return;
         }
+        request.setAttribute("categories", DaoFactory.getCatDao().all());
         request.getRequestDispatcher("/WEB-INF/ads/create.jsp").forward(request, response);
     }
 

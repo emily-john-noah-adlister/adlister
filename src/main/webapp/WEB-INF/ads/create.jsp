@@ -18,6 +18,14 @@
                 <label for="description">Description</label>
                 <textarea id="description" name="description" class="form-control" type="text"></textarea>
             </div>
+            <div class="form-group">
+                <c:forEach var="cat" items="${categories}">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="${cat.category}">
+                        <label class="custom-control-label" for="${cat.category}">${cat.category}</label>
+                    </div>
+                </c:forEach>
+            </div>
             <input type="submit" class="btn btn-block btn-primary">
         </form>
     </div>
