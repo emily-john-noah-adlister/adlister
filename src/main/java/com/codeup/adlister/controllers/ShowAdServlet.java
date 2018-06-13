@@ -30,11 +30,6 @@ public class ShowAdServlet extends HttpServlet {
         req.setAttribute("user", user);
 
 
-
-
-;
-
-
         req.getRequestDispatcher("/WEB-INF/ads/showad.jsp").forward(req, resp);
 
     }

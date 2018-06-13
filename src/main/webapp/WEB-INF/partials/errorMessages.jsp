@@ -13,6 +13,17 @@
 
     <p class="text-danger">${error}</p>
 
+    <%
+        request.getSession().removeAttribute("error");
+        request.getSession().removeAttribute("username");
+        request.getSession().removeAttribute("email");
+        request.getSession().removeAttribute("title");
+        request.getSession().removeAttribute("description");
+        request.getSession().removeAttribute("category");
+
+    %>
+
 </c:if>
+
 
 
