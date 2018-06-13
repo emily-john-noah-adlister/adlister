@@ -5,14 +5,15 @@
   Time: 11:00 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Error!</title>
-</head>
-<body>
-
-</body>
-</html>
+<c:if test="${not empty error}">
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            <h3 class="panel-title">Uh oh...</h3>
+        </div>
+        <div class="panel-body">
+                ${error}
+        </div>
+    </div>
+</c:if>
 
 

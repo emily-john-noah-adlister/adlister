@@ -26,12 +26,13 @@ public class LoginServlet extends HttpServlet {
     }
 
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         User user = DaoFactory.getUsersDao().findByUsername(username);
 
         if (user == null) {
+            request.getSession().setAttribute("error", "Invalid username.");
             response.sendRedirect("/login");
             return;
         }
@@ -47,9 +48,12 @@ public class LoginServlet extends HttpServlet {
 
         } else {
             request.setAttribute("error", "Invalid username or password");
-            response.sendRedirect("/login");
+            request.getSession().setAttribute("errors", "Invalid Password");
+            request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
         }
     }
 }
+
+//            response.sendRedirect("/login");
 
 
