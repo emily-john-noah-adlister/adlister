@@ -26,6 +26,8 @@ public class RegisterServlet extends HttpServlet {
         String password = request.getParameter("password");
         String passwordConfirmation = request.getParameter("confirm_password");
 
+
+
         boolean validAttempt = (util.isNotBlank(username) && util.isNotBlank(email) && util.isNotBlank(password) & password.equals(passwordConfirmation));
         // validate input
         boolean passwordsMatch = password.equals(passwordConfirmation);
@@ -48,6 +50,20 @@ public class RegisterServlet extends HttpServlet {
         password = Password.hash(password);
         DaoFactory.getUsersDao().insert(new User(username, email, password));
         response.sendRedirect("/login");
+
+        try {
+            String existingUser = DaoFactory.getUsersDao().findByUsername(username).getUsername();
+            if (existingUser != null) {
+                request.setAttribute("errorMessage", "Username already exists. Please use another username.");
+                request.getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
+            }
+        } catch (NullPointerException e) {
+
+            password = Password.hash(password);
+            DaoFactory.getUsersDao().insert(new User(username, email, password));
+            response.sendRedirect("/login");
+        }
+
     }
 
 }
