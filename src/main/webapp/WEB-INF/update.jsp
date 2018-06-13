@@ -8,8 +8,10 @@
     <title>Title</title>
 </head>
 <body>
+<jsp:include page="partials/navbar.jsp" />
 <div class="container">
     <h1>Edit Profile</h1>
+    <h2>${errorMessage}</h2>
     <form action="/update" method="POST">
         <div class="form-group">
             <label for="username">Username</label>
@@ -23,7 +25,8 @@
             <label for="password">Password</label>
             <input id="password" name="password" class="form-control" type="password">
         </div>
-        <input type="submit" class="btn btn-primary btn-block" value="Update Profile">
+        <button type="submit" id="id" name="id" class="btn btn-danger">Update Profile</button>
+
     </form>
 
 </div>

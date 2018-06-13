@@ -9,5 +9,4 @@ public interface Users {
     User findByUserId(Long id);
 
     void replace(User user);
-
 }
