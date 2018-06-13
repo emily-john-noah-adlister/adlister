@@ -66,7 +66,6 @@ public class MySQLUsersDao implements Users {
         }
     }
 
-
     @Override
     public void replace(User user) {
         String query = "UPDATE users SET username = ?, email = ?, password = ? WHERE id = ?";
@@ -81,6 +80,7 @@ public class MySQLUsersDao implements Users {
             throw new RuntimeException("Unable to update profile", e);
         }
     }
+
     public User findByUserId(Long id) {
         String query = "SELECT * FROM users WHERE id = ?";
         try {
@@ -91,6 +91,7 @@ public class MySQLUsersDao implements Users {
             throw new RuntimeException("Error finding a user by username", e);
         }
     }
+
 }
 
 

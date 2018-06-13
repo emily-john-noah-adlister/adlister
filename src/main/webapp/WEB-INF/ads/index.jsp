@@ -4,9 +4,11 @@
 <%@ include file="../partials/head.jsp" %>
 <html>
 <head>
-    <title>Index</title>
+
+
 </head>
 <body>
+
 
 
 <c:forEach var="ad" items="${ads}">
@@ -15,9 +17,7 @@
             Ad # <c:out value="${ad.id}"/>
         </div>
         <div class="card-body">
-            <h5><c:out value="${ad.title}"/></h5>
-            <p><c:out value="${ad.description}"/></p>
-            <p><c:out value="${ad.userId}"/></p>
+            <a href="<c:url value="/ads/showad?id=${ad.id}"/>"><c:out value="${ad.title}"/></a>
         </div>
     </div>
 </c:forEach>
@@ -25,3 +25,6 @@
 
 </body>
 </html>
+
+
+
