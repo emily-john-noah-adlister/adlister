@@ -37,6 +37,8 @@ public class RegisterServlet extends HttpServlet {
             request.setAttribute("error","Passwords do not match.");
         }else if (!validAttempt) {
             request.setAttribute("error", "Invalid input. Please try again.");
+            request.getSession().setAttribute("username", username);
+            request.getSession().setAttribute("email", email);
         }
 
 

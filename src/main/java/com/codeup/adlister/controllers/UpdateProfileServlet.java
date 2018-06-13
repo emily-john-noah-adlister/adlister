@@ -46,6 +46,7 @@ public class UpdateProfileServlet extends HttpServlet {
 
             DaoFactory.getUsersDao().replace(user);
             request.getSession().setAttribute("user", user);
+            request.getSession().setAttribute("email", email);
             response.sendRedirect("/profile");
         }
     }
