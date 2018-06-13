@@ -40,6 +40,7 @@ public class RegisterServlet extends HttpServlet {
 
         if (!validAttempt || !passwordsMatch) {
             request.getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
+
             return;
         }
 
