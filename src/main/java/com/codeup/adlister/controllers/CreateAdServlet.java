@@ -28,6 +28,36 @@ public class CreateAdServlet extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/ads/create.jsp").forward(request, response);
     }
 
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+          String title;
+          String description;
+          Ad ad = new Ad(
+                  (long)request.getSession().getAttribute("id"),
+                  title = request.getParameter("title"),
+              description = request.getParameter("description")
+        );
+                boolean blankFields = title.isEmpty() || description.isEmpty();
+                boolean titleTooLong = title.length() > 100;
+
+
+                if(blankFields) {
+                    request.getSession().setAttribute("error", "Title and Description required!");
+
+                }else if (titleTooLong){
+                    request.getSession().setAttribute("error", "Title is too long");
+
+                }
+                    if (blankFields || titleTooLong){
+                    request.getRequestDispatcher("/WEB-INF/ads/create.jsp").forward(request, response);
+
+                    return;
+                }
+
+
+
+
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String title = request.getParameter("title");
         String description = request.getParameter("description");
@@ -37,6 +67,14 @@ public class CreateAdServlet extends HttpServlet {
 
         if(validAttempt) {
             Ad ad = new Ad(
+
+                    (long) request.getSession().getAttribute("id"),
+                    request.getParameter("title"),
+                    request.getParameter("description")
+            );
+
+        DaoFactory.getAdsDao().insert(ad);
+
             (long)request.getSession().getAttribute("id"),
             request.getParameter("title"),
             request.getParameter("description")
@@ -60,6 +98,7 @@ public class CreateAdServlet extends HttpServlet {
 //            DaoFactory.getCatDao().insert(adId, category.getId());
         }
        
+
         response.sendRedirect("/ads");
         } else {
             request.getSession().setAttribute("title", title);
@@ -68,3 +107,16 @@ public class CreateAdServlet extends HttpServlet {
             }
         }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

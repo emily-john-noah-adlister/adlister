@@ -46,11 +46,6 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
 
-
-        password = Password.hash(password);
-        DaoFactory.getUsersDao().insert(new User(username, email, password));
-        response.sendRedirect("/login");
-
         try {
             String existingUser = DaoFactory.getUsersDao().findByUsername(username).getUsername();
             if (existingUser != null) {
@@ -63,7 +58,5 @@ public class RegisterServlet extends HttpServlet {
             DaoFactory.getUsersDao().insert(new User(username, email, password));
             response.sendRedirect("/login");
         }
-
     }
-
 }

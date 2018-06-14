@@ -13,6 +13,9 @@
 
     <p class="text-danger">${error}</p>
 
+    <%request.getSession().removeAttribute("error");%>
+
 </c:if>
+
 
 
