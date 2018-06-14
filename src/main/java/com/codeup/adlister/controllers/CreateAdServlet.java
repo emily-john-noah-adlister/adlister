@@ -56,8 +56,6 @@ public class CreateAdServlet extends HttpServlet {
             }
 
 
-
-
             if(validAttempt) {
             Ad ad = new Ad(
 
@@ -93,6 +91,7 @@ public class CreateAdServlet extends HttpServlet {
             request.getSession().setAttribute("description", description);
             response.sendRedirect("/ads/create");
             }
+
         }
 }
 

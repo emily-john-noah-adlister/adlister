@@ -31,22 +31,32 @@ public class UpdateProfileServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         long userid = (long) request.getSession().getAttribute("id");
-        boolean allFields = (util.isNotBlank(username)) && util.isNotBlank(email) && util.isNotBlank(password);
         User user = DaoFactory.getUsersDao().findByUserId(userid);
+        boolean allFields = (util.isNotBlank(username)) || util.isNotBlank(email) || util.isNotBlank(password);
+        boolean validation = email.contains("@");
+        boolean existingUser = username.equalsIgnoreCase(user.getUsername());
 
         try {
-            String existingUser = DaoFactory.getUsersDao().findByUsername(username).getUsername();
-            if (existingUser != null) {
-                request.setAttribute("errorMessage", "Username already exists");
+        String existingUsers = DaoFactory.getUsersDao().findByUsername(username).getUsername();
+            if (existingUsers != null) {
                 request.setAttribute("error", "This username already exists.");
+                request.getSession().setAttribute("username", username);
+                request.getSession().setAttribute("email", email);
+                request.getRequestDispatcher("/WEB-INF/update.jsp").forward(request, response);
+
             } else if (!allFields){
                 request.setAttribute("error", "All fields are required.");
+                request.getSession().setAttribute("username", username);
+                request.getSession().setAttribute("email", email);
+                request.getRequestDispatcher("/WEB-INF/update.jsp").forward(request, response);
 
-            }
-
-            if (!allFields || existingUser != null){
+            } else if(!validation) {
+                request.setAttribute("error", "Email requires @");
+                request.getSession().setAttribute("username", username);
+                request.getSession().setAttribute("email", email);
                 request.getRequestDispatcher("/WEB-INF/update.jsp").forward(request, response);
             }
+
 
 
         } catch (NullPointerException e) {
@@ -55,14 +65,12 @@ public class UpdateProfileServlet extends HttpServlet {
             user.setEmail(email);
             user.setPassword(Password.hash(password));
 
-            DaoFactory.getUsersDao().replace(user);
-            request.getSession().setAttribute("user", user);
+
+            request.getSession().setAttribute("username", username);
             request.getSession().setAttribute("email", email);
-
-            request.getSession().removeAttribute("user");
-            request.getSession().removeAttribute("email");
-
+            DaoFactory.getUsersDao().replace(user);
             response.sendRedirect("/profile");
+
 
         }
     }

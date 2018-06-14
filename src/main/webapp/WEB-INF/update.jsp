@@ -11,7 +11,7 @@
 <jsp:include page="partials/navbar.jsp" />
 <div class="container">
     <h1>Edit Profile</h1>
-    <h2>${errorMessage}</h2>
+    <h2>${error}</h2>
     <form action="/update" method="POST">
         <div class="form-group">
             <label for="username">Username</label>
@@ -19,7 +19,7 @@
         </div>
         <div class="form-group">
             <label for="email">Email</label>
-            <input id="email" name="email" class="form-control" type="text" placeholder="${email}">
+            <input id="email" name="email" class="form-control" type="text" placeholder="${password}">
         </div>
         <div class="form-group">
             <label for="password">Password</label>
