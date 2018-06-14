@@ -34,7 +34,6 @@ public class UpdateProfileServlet extends HttpServlet {
         User user = DaoFactory.getUsersDao().findByUserId(userid);
         boolean allFields = (util.isNotBlank(username)) || util.isNotBlank(email) || util.isNotBlank(password);
         boolean validation = email.contains("@");
-        boolean existingUser = username.equalsIgnoreCase(user.getUsername());
 
         try {
         String existingUsers = DaoFactory.getUsersDao().findByUsername(username).getUsername();
