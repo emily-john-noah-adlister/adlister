@@ -33,7 +33,7 @@ public class CreateAdServlet extends HttpServlet {
 
 
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String title = request.getParameter("title");
         String description = request.getParameter("description");
 
