@@ -28,11 +28,6 @@ public class CreateAdServlet extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/ads/create.jsp").forward(request, response);
     }
 
-
-
-
-
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String title = request.getParameter("title");
         String description = request.getParameter("description");
@@ -54,40 +49,25 @@ public class CreateAdServlet extends HttpServlet {
 
                 return;
             }
-
-
-
-
             if(validAttempt) {
-            Ad ad = new Ad(
+                Ad ad = new Ad(
 
-                    (long) request.getSession().getAttribute("id"),
-                    request.getParameter("title"),
-                    request.getParameter("description")
-            );
+                        (long) request.getSession().getAttribute("id"),
+                        request.getParameter("title"),
+                        request.getParameter("description")
+                );
 
-        DaoFactory.getAdsDao().insert(ad);
+                DaoFactory.getAdsDao().insert(ad);
 
-        Long adId = DaoFactory.getAdsDao().insert(ad);
+                Long adId = DaoFactory.getAdsDao().insert(ad);
 
-        System.out.println("Ad id is: " + adId);
+                String[] checkedCategories = request.getParameterValues("category");
 
-        ArrayList<String> checkedCategories = new ArrayList<>();
+                for (String category : checkedCategories) {
+                    DaoFactory.getCatDao().insert(adId, Long.parseLong(category));
+                }
+                response.sendRedirect("/ads");
 
-        if(request.getParameter("category") == null) {
-            System.out.println("checkbox is not checked");
-        }
-        else {
-            checkedCategories.add(request.getParameter("category"));
-        }
-
-        for (String category : checkedCategories) {
-            System.out.println("Categories are: " + category);
-//            DaoFactory.getCatDao().insert(adId, category.getId());
-        }
-       
-
-        response.sendRedirect("/ads");
         } else {
             request.getSession().setAttribute("title", title);
             request.getSession().setAttribute("description", description);
