@@ -9,7 +9,9 @@
 <body>
     <jsp:include page="WEB-INF/partials/navbar.jsp" />
     <div class="container">
-        <h1 id="welcome-banner">Welcome to the Adlister!</h1>
+        <h1 id="welcome-banner">Welcome to Friender!</h1>
     </div>
 </body>
 </html>
+
+

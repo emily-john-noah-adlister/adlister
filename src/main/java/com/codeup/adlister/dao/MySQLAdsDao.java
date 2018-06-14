@@ -64,13 +64,15 @@ public class MySQLAdsDao implements Ads {
     @Override
     public Long insert(Ad ad) {
         try {
-            String sql = createInsertQuery(ad);
+            String sql = "INSERT INTO ads(user_id, title, description) VALUES (?, ?, ?)";
 
-            PreparedStatement stmt = connection.prepareStatement(sql);
+            PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            System.out.println("Preparing to run query: " + sql);
 
-            stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+            stmt.setLong(1, ad.getUserId());
+            stmt.setString(2, ad.getTitle());
+            stmt.setString(3, ad.getDescription());
+            stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             rs.next();
             return rs.getLong(1);
@@ -107,15 +109,15 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
-    private String createInsertQuery(Ad ad) {
-        String sql = "INSERT INTO ads(user_id, title, description) VALUES(%d, '%s', '%s')";
-        return String.format(
-                sql,
-                ad.getUserId(),
-                ad.getTitle(),
-                ad.getDescription()
-        );
-    }
+//    private String createInsertQuery(Ad ad) {
+//        String sql = "INSERT INTO ads(user_id, title, description) VALUES(%d, '%s', '%s')";
+//        return String.format(
+//                sql,
+//                ad.getUserId(),
+//                ad.getTitle(),
+//                ad.getDescription()
+//        );
+//    }
 
     private Ad extractAd(ResultSet rs) throws SQLException {
         if (! rs.next()) {

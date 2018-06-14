@@ -15,6 +15,9 @@
     <div class="container">
         <h1 id="welcome-banner">Welcome, <c:out value="${sessionScope.user.username}"/>!</h1>
     </div>
+    <div id="update-profile">
+            <a class="btn btn-primary" href="/update" role="button">Update Profile</a>
+    </div>
 
     <h2>Here are your ads</h2>
     <c:forEach var="ad" items="${userAds}">

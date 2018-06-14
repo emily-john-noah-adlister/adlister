@@ -27,7 +27,6 @@ public class RegisterServlet extends HttpServlet {
         String passwordConfirmation = request.getParameter("confirm_password");
 
 
-
         boolean validation = email.contains("@");
         boolean validAttempt = (util.isNotBlank(username) && util.isNotBlank(email) && util.isNotBlank(password) & password.equals(passwordConfirmation));
         boolean passwordsMatch = password.equals(passwordConfirmation);
@@ -54,11 +53,6 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
 
-
-        password = Password.hash(password);
-        DaoFactory.getUsersDao().insert(new User(username, email, password));
-        response.sendRedirect("/login");
-
         try {
             String existingUser = DaoFactory.getUsersDao().findByUsername(username).getUsername();
             if (existingUser != null) {
@@ -71,7 +65,5 @@ public class RegisterServlet extends HttpServlet {
             DaoFactory.getUsersDao().insert(new User(username, email, password));
             response.sendRedirect("/login");
         }
-
     }
-
 }
