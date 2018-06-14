@@ -29,31 +29,6 @@ public class CreateAdServlet extends HttpServlet {
     }
 
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-          String title;
-          String description;
-          Ad ad = new Ad(
-                  (long)request.getSession().getAttribute("id"),
-                  title = request.getParameter("title"),
-              description = request.getParameter("description")
-        );
-                boolean blankFields = title.isEmpty() || description.isEmpty();
-                boolean titleTooLong = title.length() > 100;
-
-
-                if(blankFields) {
-                    request.getSession().setAttribute("error", "Title and Description required!");
-
-                }else if (titleTooLong){
-                    request.getSession().setAttribute("error", "Title is too long");
-
-                }
-                    if (blankFields || titleTooLong){
-                    request.getRequestDispatcher("/WEB-INF/ads/create.jsp").forward(request, response);
-
-                    return;
-                }
-
 
 
 
@@ -63,9 +38,27 @@ public class CreateAdServlet extends HttpServlet {
         String description = request.getParameter("description");
 
         boolean validAttempt = (util.isNotBlank(title) && util.isNotBlank(description));
+            boolean blankFields = title.isEmpty() || description.isEmpty();
+            boolean titleTooLong = title.length() > 100;
 
 
-        if(validAttempt) {
+            if(blankFields) {
+                request.getSession().setAttribute("error", "Title and Description required!");
+
+            }else if (titleTooLong){
+                request.getSession().setAttribute("error", "Title is too long");
+
+            }
+            if (blankFields || titleTooLong){
+                request.getRequestDispatcher("/WEB-INF/ads/create.jsp").forward(request, response);
+
+                return;
+            }
+
+
+
+
+            if(validAttempt) {
             Ad ad = new Ad(
 
                     (long) request.getSession().getAttribute("id"),
@@ -74,11 +67,6 @@ public class CreateAdServlet extends HttpServlet {
             );
 
         DaoFactory.getAdsDao().insert(ad);
-
-            (long)request.getSession().getAttribute("id"),
-            request.getParameter("title"),
-            request.getParameter("description")
-        );
 
         Long adId = DaoFactory.getAdsDao().insert(ad);
 
