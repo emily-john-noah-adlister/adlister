@@ -49,12 +49,16 @@ public class LoginServlet extends HttpServlet {
 
         } else {
             request.setAttribute("error", "Invalid username or password");
+
             request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+
+            request.getSession().setAttribute("username", username);
+           
+
         }
 
     }
 }
 
-//            response.sendRedirect("/login");
 
 

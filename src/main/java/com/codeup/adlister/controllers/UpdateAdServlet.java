@@ -23,12 +23,9 @@ public class UpdateAdServlet extends HttpServlet{
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         long adId = Long.parseLong(request.getParameter("update"));
-        System.out.println("Ad id: " + adId);
 
         String title = request.getParameter("title");
-        System.out.println("title is: " + title);
         String description = request.getParameter("description");
-        System.out.println("Description is: " + description);
 
         boolean blankFields = title.isEmpty() || description.isEmpty();
         boolean titleTooLong = title.length() > 100;
@@ -53,7 +50,8 @@ public class UpdateAdServlet extends HttpServlet{
 
         ad.setDescription(description);
 
-
+        request.getSession().setAttribute("editableAd.title", title);
+        request.getSession().setAttribute("description", description);
         DaoFactory.getAdsDao().update(ad);
         response.sendRedirect("/profile");
     }
