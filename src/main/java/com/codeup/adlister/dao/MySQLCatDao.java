@@ -30,18 +30,22 @@ public class MySQLCatDao implements Categories {
             String sql = "SELECT * FROM categories";
             PreparedStatement stmt = connection.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
-            List<Category> catsFromDB = new ArrayList<>();
-            while(rs.next()) {
-                long id = rs.getLong("id");
-                String category = rs.getString("category");
-
-                Category cat = new Category(id, category);
-                catsFromDB.add(cat);
-            }
-            return catsFromDB;
+            returnCatList(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Could not retrieve categories", e);
         }
+    }
+
+    public List<Category> returnCatList(ResultSet rs) {
+        List<Category> catsFromDB = new ArrayList<>();
+        while(rs.next()) {
+            long id = rs.getLong("id");
+            String category = rs.getString("category");
+
+            Category cat = new Category(id, category);
+            catsFromDB.add(cat);
+        }
+        return catsFromDB;
     }
 
     @Override
@@ -61,4 +65,23 @@ public class MySQLCatDao implements Categories {
         }
     }
 
+    public List<Category> getAdCategories(Long Adid) {
+        String sql = "SELECT c.category " +
+                "FROM categories c " +
+                "JOIN ad_category ac ON c.id = ac.category_id " +
+                "JOIN ads a ON ac.ad_id = a.id WHERE a.id = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setLong(1, Adid);
+            ResultSet rs = stmt.executeQuery();
+            returnCatList(rs);
+        } catch(SQLException e) {
+            throw new RuntimeException("Could not get categories", e);
+        }
+
+    }
+
+
 }
+
+
