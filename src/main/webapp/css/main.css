@@ -2,6 +2,11 @@ body {
     background-image: url("../img/what-the-hex.png");
 }
 
+#update-profile {
+    max-width: 50%;
+    align-content: center;
+}
+
 a:link {
     color: black
 }
@@ -49,3 +54,5 @@ nav {
     margin: 20px;
     align-content: center;
 }
+
+
