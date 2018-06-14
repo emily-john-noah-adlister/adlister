@@ -34,8 +34,7 @@ public class UpdateProfileServlet extends HttpServlet {
         try {
             String existingUser = DaoFactory.getUsersDao().findByUsername(username).getUsername();
             if (existingUser != null) {
-                String message = "Username already exists";
-                request.setAttribute("errorMessage", message);
+                request.setAttribute("errorMessage", "Username already exists");
                 request.getRequestDispatcher("/WEB-INF/update.jsp").forward(request, response);
             }
         } catch (NullPointerException e) {
@@ -47,7 +46,9 @@ public class UpdateProfileServlet extends HttpServlet {
             DaoFactory.getUsersDao().replace(user);
             request.getSession().setAttribute("user", user);
             request.getSession().setAttribute("email", email);
+
             response.sendRedirect("/profile");
+
         }
     }
 

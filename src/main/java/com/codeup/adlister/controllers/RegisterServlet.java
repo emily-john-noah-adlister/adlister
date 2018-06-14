@@ -28,23 +28,29 @@ public class RegisterServlet extends HttpServlet {
 
 
 
+        boolean validation = email.contains("@");
         boolean validAttempt = (util.isNotBlank(username) && util.isNotBlank(email) && util.isNotBlank(password) & password.equals(passwordConfirmation));
-        // validate input
         boolean passwordsMatch = password.equals(passwordConfirmation);
+
 
 
         if (!passwordsMatch) {
             request.setAttribute("error","Passwords do not match.");
+            request.getSession().setAttribute("username", username);
+            request.getSession().setAttribute("email", email);
         }else if (!validAttempt) {
             request.setAttribute("error", "Invalid input. Please try again.");
+            request.getSession().setAttribute("username", username);
+            request.getSession().setAttribute("email", email);
+        } else if(!validation){
+            request.setAttribute("error", "Must contain @ for email");
             request.getSession().setAttribute("username", username);
             request.getSession().setAttribute("email", email);
         }
 
 
-        if (!validAttempt || !passwordsMatch) {
+        if (!validAttempt || !passwordsMatch || !validation) {
             request.getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
-
             return;
         }
 
