@@ -11,6 +11,7 @@
     <h1>Edit Ad ${editAdId}</h1>
     <form action="/ads/update" method="POST">
         <div class="form-group">
+            <jsp:include page="/WEB-INF/partials/errorMessages.jsp"/>
             <label for="title">Title</label>
             <input id="title" name="title" class="form-control" type="text" placeholder="${editableAd.title}">
         </div>

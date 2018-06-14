@@ -21,7 +21,7 @@ public class UpdateAdServlet extends HttpServlet{
         request.getRequestDispatcher("/WEB-INF/ads/update.jsp").forward(request, response);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         long adId = Long.parseLong(request.getParameter("update"));
         System.out.println("Ad id: " + adId);
 
@@ -29,6 +29,22 @@ public class UpdateAdServlet extends HttpServlet{
         System.out.println("title is: " + title);
         String description = request.getParameter("description");
         System.out.println("Description is: " + description);
+
+        boolean blankFields = title.isEmpty() || description.isEmpty();
+        boolean titleTooLong = title.length() > 100;
+
+        if(blankFields) {
+            request.getSession().setAttribute("error", "Title and Description required!");
+
+        }else if (titleTooLong){
+            request.getSession().setAttribute("error", "Title is too long");
+
+        }
+        if (blankFields || titleTooLong){
+            request.getRequestDispatcher("/WEB-INF/ads/update.jsp").forward(request, response);
+
+            return;
+        }
 
         Ad ad = DaoFactory.getAdsDao().findAd(adId);
         System.out.println(ad.getTitle());

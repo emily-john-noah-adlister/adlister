@@ -29,8 +29,8 @@ public class CreateAdServlet extends HttpServlet {
                   title = request.getParameter("title"),
               description = request.getParameter("description")
         );
-          boolean blankFields = title.isEmpty() || description.isEmpty();
-                boolean titleTooLong = title.length() > 5;
+                boolean blankFields = title.isEmpty() || description.isEmpty();
+                boolean titleTooLong = title.length() > 100;
 
 
                 if(blankFields) {
