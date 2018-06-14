@@ -19,7 +19,7 @@
     <p>Username: <c:out value="${user.username}"/></p>
     <p>Categories:
         <c:forEach var="category" items="${categories}">
-        ${category.category}
+            <a href="#">${category.category}, </a>
         </c:forEach>
     </p>
 

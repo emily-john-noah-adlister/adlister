@@ -24,29 +24,31 @@ public class MySQLCatDao implements Categories {
         }
     }
 
+    public List<Category> returnCatList(ResultSet rs) throws SQLException {
+        List<Category> catsFromDB = new ArrayList<>();
+        while(rs.next()) {
+            String category = rs.getString("category");
+
+            Category cat = new Category(category);
+            catsFromDB.add(cat);
+        }
+
+        return catsFromDB;
+    }
+
     @Override
     public List<Category> all() {
         try {
             String sql = "SELECT * FROM categories";
             PreparedStatement stmt = connection.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
-            returnCatList(rs);
+            return returnCatList(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Could not retrieve categories", e);
         }
     }
 
-    public List<Category> returnCatList(ResultSet rs) {
-        List<Category> catsFromDB = new ArrayList<>();
-        while(rs.next()) {
-            long id = rs.getLong("id");
-            String category = rs.getString("category");
 
-            Category cat = new Category(id, category);
-            catsFromDB.add(cat);
-        }
-        return catsFromDB;
-    }
 
     @Override
     public Long insert(long adId, long catId) {
@@ -74,7 +76,7 @@ public class MySQLCatDao implements Categories {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setLong(1, Adid);
             ResultSet rs = stmt.executeQuery();
-            returnCatList(rs);
+            return returnCatList(rs);
         } catch(SQLException e) {
             throw new RuntimeException("Could not get categories", e);
         }
