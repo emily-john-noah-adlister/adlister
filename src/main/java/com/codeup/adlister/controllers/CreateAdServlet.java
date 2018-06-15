@@ -29,10 +29,6 @@ public class CreateAdServlet extends HttpServlet {
     }
 
 
-
-
-
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String title = request.getParameter("title");
         String description = request.getParameter("description");
@@ -76,7 +72,7 @@ public class CreateAdServlet extends HttpServlet {
 
         for (String category : checkedCategories) {
             System.out.println("Categories are: " + category);
-//            DaoFactory.getCatDao().insert(adId, category.getId());
+            DaoFactory.getCatDao().insert(adId, Long.parseLong(category));
         }
        
 

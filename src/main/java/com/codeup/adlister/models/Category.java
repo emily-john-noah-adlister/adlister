@@ -4,7 +4,11 @@ public class Category {
     private long id;
     private String category;
 
-    public Category(long id, String category) {
+    public Category(String category) {
+        this.category = category;
+    }
+
+    public Category(Long id, String category) {
         this.id = id;
         this.category = category;
     }
