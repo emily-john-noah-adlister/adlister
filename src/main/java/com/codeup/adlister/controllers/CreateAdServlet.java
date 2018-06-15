@@ -33,48 +33,52 @@ public class CreateAdServlet extends HttpServlet {
         String description = request.getParameter("description");
 
         boolean validAttempt = (util.isNotBlank(title) && util.isNotBlank(description));
-            boolean blankFields = title.isEmpty() || description.isEmpty();
-            boolean titleTooLong = title.length() > 100;
+
+        boolean blankFields = title.isEmpty() || description.isEmpty();
+        boolean titleTooLong = title.length() > 100;
 
 
-            if(blankFields) {
-                request.getSession().setAttribute("error", "Title and Description required!");
+         try {
+             if (blankFields) {
+                 request.getSession().setAttribute("error", "Title and Description required!");
+                 request.getSession().setAttribute("title", title);
+                 request.getSession().setAttribute("description", description);
 
-            }else if (titleTooLong){
-                request.getSession().setAttribute("error", "Title is too long");
+             } else if (titleTooLong) {
+                 request.getSession().setAttribute("error", "Title is too long");
+                 request.getSession().setAttribute("title", title);
+                 request.getSession().setAttribute("description", description);
 
-            }
-            if (blankFields || titleTooLong){
-                request.getRequestDispatcher("/WEB-INF/ads/create.jsp").forward(request, response);
+             }
+             if (blankFields || titleTooLong) {
+                 request.getRequestDispatcher("/WEB-INF/ads/create.jsp").forward(request, response);
+                 return;
+             }
 
-                return;
-            }
-            if(validAttempt) {
-                Ad ad = new Ad(
+             if (validAttempt) {
+                 Ad ad = new Ad(
+                     (long) request.getSession().getAttribute("id"),
+                     request.getParameter("title"),
+                     request.getParameter("description")
+                 );
+                 Long adId = DaoFactory.getAdsDao().insert(ad);
+                 String[] checkedCategories = request.getParameterValues("category");
 
-                        (long) request.getSession().getAttribute("id"),
-                        request.getParameter("title"),
-                        request.getParameter("description")
-                );
+                 for (String category : checkedCategories) {
+                     DaoFactory.getCatDao().insert(adId, Long.parseLong(category));
+                 }
+                 response.sendRedirect("/ads");
 
-                Long adId = DaoFactory.getAdsDao().insert(ad);
+             } else {
+                 request.getSession().setAttribute("title", title);
+                 request.getSession().setAttribute("description", description);
+                 response.sendRedirect("/ads/create");
+             }
+         } catch (NullPointerException e){
+             response.sendRedirect("/ads");
+         }
+    }
 
-                System.out.println("Ad id is: " + adId);
-
-                String[] checkedCategories = request.getParameterValues("category");
-
-                for (String category : checkedCategories) {
-                    System.out.println("Categories are: " + category);
-                    DaoFactory.getCatDao().insert(adId, Long.parseLong(category));
-                }
-                response.sendRedirect("/ads");
-
-        } else {
-            request.getSession().setAttribute("title", title);
-            request.getSession().setAttribute("description", description);
-            response.sendRedirect("/ads/create");
-            }
-        }
 }
 
 
