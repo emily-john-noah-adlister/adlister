@@ -80,7 +80,6 @@ public class MySQLCatDao implements Categories {
         } catch(SQLException e) {
             throw new RuntimeException("Could not get categories", e);
         }
-
     }
 
 

@@ -197,7 +197,22 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
-
+    @Override
+    public List<Ad> adWithCat(String category) {
+        String sql = "SELECT * FROM ads a " +
+                "JOIN ad_category ac ON a.id = ac.ad_id " +
+                "JOIN categories c ON ac.category_id " +
+                "WHERE c.category = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, category);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            return createAdsFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Could not find ads", e);
+        }
+    }
 }
 
 

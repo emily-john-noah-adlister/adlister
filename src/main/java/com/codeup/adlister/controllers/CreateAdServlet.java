@@ -64,7 +64,8 @@ public class CreateAdServlet extends HttpServlet {
                 String[] checkedCategories = request.getParameterValues("category");
 
                 for (String category : checkedCategories) {
-                    DaoFactory.getCatDao().insert(adId, Long.parseLong(category));
+                    System.out.println("Categories are: " + category);
+//                    DaoFactory.getCatDao().insert(adId, Long.parseLong(category));
                 }
                 response.sendRedirect("/ads");
 
