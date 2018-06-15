@@ -17,10 +17,6 @@ public class AdsIndexServlet extends HttpServlet {
             response.sendRedirect("/login");
             return;
         }
-        for (Ad ad: DaoFactory.getAdsDao().all()) {
-            Long id = ad.getId();
-            request.setAttribute("adCategories", DaoFactory.getCatDao().getAdCategories(id));
-        }
         request.setAttribute("ads", DaoFactory.getAdsDao().all());
         request.getRequestDispatcher("/WEB-INF/ads/index.jsp").forward(request, response);
     }

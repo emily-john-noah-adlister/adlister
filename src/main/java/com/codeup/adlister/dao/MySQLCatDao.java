@@ -37,6 +37,18 @@ public class MySQLCatDao implements Categories {
         return catsFromDB;
     }
 
+    public List<Category> returnCatListJustNames(ResultSet rs) throws SQLException {
+        List<Category> catsFromDB = new ArrayList<>();
+        while(rs.next()) {
+            String category = rs.getString("category");
+
+            Category cat = new Category(category);
+            catsFromDB.add(cat);
+        }
+
+        return catsFromDB;
+    }
+
     @Override
     public List<Category> all() {
         try {
@@ -77,7 +89,7 @@ public class MySQLCatDao implements Categories {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setLong(1, Adid);
             ResultSet rs = stmt.executeQuery();
-            return returnCatList(rs);
+            return returnCatListJustNames(rs);
         } catch(SQLException e) {
             throw new RuntimeException("Could not get categories", e);
         }
