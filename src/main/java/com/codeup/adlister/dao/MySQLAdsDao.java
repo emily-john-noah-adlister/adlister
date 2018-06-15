@@ -1,6 +1,7 @@
 package com.codeup.adlister.dao;
 
 import com.codeup.adlister.models.Ad;
+import com.codeup.adlister.models.Category;
 import com.codeup.adlister.models.User;
 import com.mysql.cj.jdbc.Driver;
 
@@ -172,6 +173,8 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+
+
     @Override
     public void update(Ad ad) {
         String sql = "UPDATE ads SET title = ?, description = ? WHERE id = ?";
@@ -197,6 +200,22 @@ public class MySQLAdsDao implements Ads {
             return extractAd(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Could not find user by ID", e);
+        }
+    }
+
+    @Override
+    public List<Ad> adWithCat(String category) {
+        String sql = "SELECT * FROM ads a " +
+                "JOIN ad_category ac ON a.id = ac.ad_id " +
+                "JOIN categories c ON ac.category_id = c.id " +
+                "WHERE c.category = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, category);
+            ResultSet rs = stmt.executeQuery();
+            return createAdsFromDB(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Could not find ads", e);
         }
     }
 }

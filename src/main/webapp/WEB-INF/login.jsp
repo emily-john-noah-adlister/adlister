@@ -19,7 +19,7 @@
         <form action="/login" method="POST">
             <div class="form-group">
                 <label for="username">Username</label>
-                <input id="username" name="username" class="form-control" type="text">
+                <input id="username" name="username" class="form-control" type="text" placeholder=${username}>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>

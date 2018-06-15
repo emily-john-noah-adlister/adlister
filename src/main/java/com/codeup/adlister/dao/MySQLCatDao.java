@@ -1,6 +1,5 @@
 package com.codeup.adlister.dao;
 
-import com.codeup.adlister.models.Ad;
 import com.codeup.adlister.models.Category;
 import com.mysql.cj.jdbc.Driver;
 
@@ -24,25 +23,44 @@ public class MySQLCatDao implements Categories {
         }
     }
 
+    public List<Category> returnCatList(ResultSet rs) throws SQLException {
+        List<Category> catsFromDB = new ArrayList<>();
+        while(rs.next()) {
+            Long id = rs.getLong("id");
+            String category = rs.getString("category");
+
+            Category cat = new Category(id, category);
+            catsFromDB.add(cat);
+        }
+
+        return catsFromDB;
+    }
+
+    public List<Category> returnCatListJustNames(ResultSet rs) throws SQLException {
+        List<Category> catsFromDB = new ArrayList<>();
+        while(rs.next()) {
+            String category = rs.getString("category");
+
+            Category cat = new Category(category);
+            catsFromDB.add(cat);
+        }
+
+        return catsFromDB;
+    }
+
     @Override
     public List<Category> all() {
         try {
             String sql = "SELECT * FROM categories";
             PreparedStatement stmt = connection.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
-            List<Category> catsFromDB = new ArrayList<>();
-            while(rs.next()) {
-                long id = rs.getLong("id");
-                String category = rs.getString("category");
-
-                Category cat = new Category(id, category);
-                catsFromDB.add(cat);
-            }
-            return catsFromDB;
+            return returnCatList(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Could not retrieve categories", e);
         }
     }
+
+
 
     @Override
     public Long insert(long adId, long catId) {
@@ -61,4 +79,34 @@ public class MySQLCatDao implements Categories {
         }
     }
 
+    public List<Category> getAdCategories(Long Adid) {
+        String sql = "SELECT c.category " +
+                "FROM categories c " +
+                "JOIN ad_category ac ON c.id = ac.category_id " +
+                "JOIN ads a ON ac.ad_id = a.id WHERE a.id = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setLong(1, Adid);
+            ResultSet rs = stmt.executeQuery();
+            return returnCatListJustNames(rs);
+        } catch(SQLException e) {
+            throw new RuntimeException("Could not get categories", e);
+        }
+    }
+
+    @Override
+    public void delete(Long adId) {
+        try {
+        String sql = "DELETE FROM ad_category WHERE ad_id = ?";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setLong(1,adId);
+        stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to delete from table", e);
+        }
+    }
+
+
 }
+
+
