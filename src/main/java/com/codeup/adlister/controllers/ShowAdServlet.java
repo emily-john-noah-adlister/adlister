@@ -23,7 +23,9 @@ public class ShowAdServlet extends HttpServlet {
         Ads ad = DaoFactory.getAdsDao();
         req.setAttribute("ad", ad.findAd(id));
 
+
         req.setAttribute("categories", DaoFactory.getCatDao().getAdCategories(id));
+
 
         long user_id = Ad.getUserId();
         User user = DaoFactory.getUsersDao().findByUserId(user_id);
@@ -32,6 +34,9 @@ public class ShowAdServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/ads/showad.jsp").forward(req, resp);
 
     }
+
+
+
 }
 
 

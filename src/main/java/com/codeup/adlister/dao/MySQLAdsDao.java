@@ -142,6 +142,10 @@ public class MySQLAdsDao implements Ads {
         return ads;
     }
 
+
+
+
+
     @Override
     public List<Ad> displayUsersAds(Long search){
         String sql = "SELECT * FROM ads WHERE user_id = ?";
