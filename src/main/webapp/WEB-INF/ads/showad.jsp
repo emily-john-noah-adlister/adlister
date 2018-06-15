@@ -20,9 +20,10 @@
     <div class="card-body">
     <p><c:out value="${ad.description}"/></p>
     </div>
-        <div class="card-footer"</div>
-    <p>User Id <c:out value="${user.id}"/></p>
-    <p>Username: <c:out value="${user.username}"/></p>
+        <div class="card-footer">
+
+
+Ad Owner: <a href="/adOwner?username=<c:out value='${user.username}'/>"><c:out value="${user.username}"/></a>
 
     </div>
 

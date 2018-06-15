@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<% session.setAttribute("pagename", "ads");%>
 <%@ include file="../partials/navbar.jsp" %>
 <%@ include file="../partials/head.jsp" %>
 <html>
