@@ -10,4 +10,6 @@ public interface Categories {
     Long insert(long ad_id, long cat_id);
 
     List<Category> getAdCategories(Long id);
+
+    void delete(Long id);
 }

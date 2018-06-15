@@ -9,8 +9,8 @@
 </head>
 <body>
 
-<h1>Here are your ads</h1>
-<<c:forEach var="ad" items="${adsWithCat}">
+<h1>Here are your ads under category: ${currentCategory}</h1>
+<c:forEach var="ad" items="${adsWithCat}">
     <div class="card">
         <div class = "card-header">
             <h1><c:out value="${ad.title}"/></h1>
@@ -18,14 +18,9 @@
         <div class="card-body">
             <p><c:out value="${ad.description}"/></p>
         </div>
-        <div class="card-footer"</div>
-    <p>User Id <c:out value="${user.id}"/></p>
-    <p>Username: <c:out value="${user.username}"/></p>
-    <%--<p>Categories:--%>
-        <%--<c:forEach var="category" items="${categories}">--%>
-            <%--<a href="<c:url value="/ads/category?=${category.category}"/>">  ${category.category}  </a>--%>
-        <%--</c:forEach>--%>
-    <%--</p>--%>
+        <div class="card-footer">
+            <p>Username: <c:out value="${user.username}"/></p>
+        </div>
     </div>
 </c:forEach>
 

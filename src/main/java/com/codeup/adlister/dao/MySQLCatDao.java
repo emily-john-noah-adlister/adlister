@@ -94,6 +94,18 @@ public class MySQLCatDao implements Categories {
         }
     }
 
+    @Override
+    public void delete(Long adId) {
+        try {
+        String sql = "DELETE FROM ad_category WHERE ad_id = ?";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setLong(1,adId);
+        stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to delete from table", e);
+        }
+    }
+
 
 }
 

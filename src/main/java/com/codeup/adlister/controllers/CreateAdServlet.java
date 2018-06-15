@@ -57,8 +57,6 @@ public class CreateAdServlet extends HttpServlet {
                         request.getParameter("description")
                 );
 
-                DaoFactory.getAdsDao().insert(ad);
-
                 Long adId = DaoFactory.getAdsDao().insert(ad);
 
                 System.out.println("Ad id is: " + adId);

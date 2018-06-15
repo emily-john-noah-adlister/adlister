@@ -19,7 +19,7 @@
     <p>Username: <c:out value="${user.username}"/></p>
     <p>Categories:
         <c:forEach var="category" items="${categories}">
-            <a href="<c:url value="/ads/category?=${category.category}"/>">  ${category.category}  </a>
+            <a href="<c:url value="/ads/category?cat=${category.category}"/>">  ${category.category}  </a>
         </c:forEach>
     </p>
     </div>
