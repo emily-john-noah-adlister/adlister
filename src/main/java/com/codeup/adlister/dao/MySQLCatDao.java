@@ -1,6 +1,5 @@
 package com.codeup.adlister.dao;
 
-import com.codeup.adlister.models.Ad;
 import com.codeup.adlister.models.Category;
 import com.mysql.cj.jdbc.Driver;
 
@@ -25,6 +24,19 @@ public class MySQLCatDao implements Categories {
     }
 
     public List<Category> returnCatList(ResultSet rs) throws SQLException {
+        List<Category> catsFromDB = new ArrayList<>();
+        while(rs.next()) {
+            Long id = rs.getLong("id");
+            String category = rs.getString("category");
+
+            Category cat = new Category(id, category);
+            catsFromDB.add(cat);
+        }
+
+        return catsFromDB;
+    }
+
+    public List<Category> returnCatListJustNames(ResultSet rs) throws SQLException {
         List<Category> catsFromDB = new ArrayList<>();
         while(rs.next()) {
             String category = rs.getString("category");
@@ -76,11 +88,22 @@ public class MySQLCatDao implements Categories {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setLong(1, Adid);
             ResultSet rs = stmt.executeQuery();
-            return returnCatList(rs);
+            return returnCatListJustNames(rs);
         } catch(SQLException e) {
             throw new RuntimeException("Could not get categories", e);
         }
+    }
 
+    @Override
+    public void delete(Long adId) {
+        try {
+        String sql = "DELETE FROM ad_category WHERE ad_id = ?";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setLong(1,adId);
+        stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to delete from table", e);
+        }
     }
 
 

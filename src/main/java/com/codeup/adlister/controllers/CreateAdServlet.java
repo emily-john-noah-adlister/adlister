@@ -33,6 +33,7 @@ public class CreateAdServlet extends HttpServlet {
         String description = request.getParameter("description");
 
         boolean validAttempt = (util.isNotBlank(title) && util.isNotBlank(description));
+
         boolean blankFields = title.isEmpty() || description.isEmpty();
         boolean titleTooLong = title.length() > 100;
 
@@ -77,6 +78,7 @@ public class CreateAdServlet extends HttpServlet {
              response.sendRedirect("/ads");
          }
     }
+
 }
 
 

@@ -8,6 +8,11 @@ public class Category {
         this.category = category;
     }
 
+    public Category(long id, String category) {
+        this.id = id;
+        this.category = category;
+    }
+
     public long getId() {
         return id;
     }

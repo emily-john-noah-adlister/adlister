@@ -25,5 +25,6 @@ public interface Ads {
 
     Ad getAdFromId(Long id);
 
+    List<Ad> adWithCat(String category);
 
 }
