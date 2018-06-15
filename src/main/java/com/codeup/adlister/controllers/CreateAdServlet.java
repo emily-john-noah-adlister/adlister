@@ -24,7 +24,7 @@ public class CreateAdServlet extends HttpServlet {
             response.sendRedirect("/login");
             return;
         }
-        request.setAttribute("categories", DaoFactory.getCatDao().all());
+        request.setAttribute("allCategories", DaoFactory.getCatDao().all());
         request.getRequestDispatcher("/WEB-INF/ads/create.jsp").forward(request, response);
     }
 
@@ -60,6 +60,8 @@ public class CreateAdServlet extends HttpServlet {
                 DaoFactory.getAdsDao().insert(ad);
 
                 Long adId = DaoFactory.getAdsDao().insert(ad);
+
+                System.out.println("Ad id is: " + adId);
 
                 String[] checkedCategories = request.getParameterValues("category");
 
