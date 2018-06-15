@@ -72,14 +72,7 @@ public class CreateAdServlet extends HttpServlet {
 
         System.out.println("Ad id is: " + adId);
 
-        ArrayList<String> checkedCategories = new ArrayList<>();
-
-        if(request.getParameter("category") == null) {
-            System.out.println("checkbox is not checked");
-        }
-        else {
-            checkedCategories.add(request.getParameter("category"));
-        }
+        String[] checkedCategories = request.getParameterValues("category");
 
         for (String category : checkedCategories) {
             System.out.println("Categories are: " + category);
