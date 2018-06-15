@@ -6,12 +6,6 @@ CREATE DATABASE IF NOT EXISTS adlister_db;
 
 USE adlister_db;
 
-DROP TABLE ad_category;
-DROP TABLE categories;
-DROP TABLE ads;
-DROP TABLE users;
-
-
 CREATE TABLE IF NOT EXISTS users(
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   email VARCHAR(100),

@@ -19,7 +19,7 @@
             <p><c:out value="${ad.description}"/></p>
         </div>
         <div class="card-footer">
-            <p>Username: <c:out value="${user.username}"/></p>
+            Ad Owner: <a href="/adOwner?username=<c:out value='${user.username}'/>"><c:out value="${user.username}"/></a>
         </div>
     </div>
 </c:forEach>

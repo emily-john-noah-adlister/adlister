@@ -17,17 +17,13 @@
 
         <div class="card-footer">
 
+            Ad Owner: <a href="/adOwner?username=<c:out value='${user.username}'/>"><c:out value="${user.username}"/></a>
 
-Ad Owner: <a href="/adOwner?username=<c:out value='${user.username}'/>"><c:out value="${user.username}"/></a>
-
-
-       
-    
-   <p>Categories:
-        <c:forEach var="category" items="${categories}">
-            <a href="<c:url value="/ads/category?cat=${category.category}"/>">  ${category.category}  </a>
-        </c:forEach>
-    </p>
+       <p>Categories:
+            <c:forEach var="category" items="${categories}">
+                <a href="<c:url value="/ads/category?cat=${category.category}"/>">  ${category.category}  </a>
+            </c:forEach>
+        </p>
 
     </div>
 </div>
