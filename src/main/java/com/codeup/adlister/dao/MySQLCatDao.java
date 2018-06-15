@@ -27,9 +27,10 @@ public class MySQLCatDao implements Categories {
     public List<Category> returnCatList(ResultSet rs) throws SQLException {
         List<Category> catsFromDB = new ArrayList<>();
         while(rs.next()) {
+            Long id = rs.getLong("id");
             String category = rs.getString("category");
 
-            Category cat = new Category(category);
+            Category cat = new Category(id, category);
             catsFromDB.add(cat);
         }
 
