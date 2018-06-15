@@ -31,35 +31,39 @@ public class UpdateProfileServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         long userid = (long) request.getSession().getAttribute("id");
-        boolean allFields = (util.isNotBlank(username)) && util.isNotBlank(email) && util.isNotBlank(password);
+        boolean allFields = (util.isNotBlank(username)) || util.isNotBlank(email) || util.isNotBlank(password);
+        boolean validEmail = email.contains("@");
         User user = DaoFactory.getUsersDao().findByUserId(userid);
 
         try {
-            String existingUser = DaoFactory.getUsersDao().findByUsername(username).getUsername();
-            if (existingUser != null) {
-                request.setAttribute("error", "This username already exists.");
-            } else if (!allFields){
-                request.setAttribute("error", "All fields are required.");
 
-            }
+                if(username.equals(user.getUsername())){
+                    request.setAttribute("error", "Username exists");
+                    response.sendRedirect("/update");
+                    return;
+                }
+                if(username.isEmpty() || email.isEmpty() || password.isEmpty()){
+                    request.setAttribute("error", "All fields must be filled");
+                    response.sendRedirect("/update");
+                    return;
+                }
 
-            if (!allFields || existingUser != null){
-
-                request.getRequestDispatcher("/WEB-INF/update.jsp").forward(request, response);
-            }
-
-
-
-
-        } catch (NullPointerException e) {
 
             user.setUsername(username);
             user.setEmail(email);
             user.setPassword(Password.hash(password));
 
-            DaoFactory.getUsersDao().replace(user);
             request.getSession().setAttribute("user", user);
-            request.getSession().setAttribute("email", email);
+            request.getSession().setAttribute("username", user.getUsername());
+            request.getSession().setAttribute("email", user.getEmail());
+            request.getSession().setAttribute("id", user.getId());
+
+            DaoFactory.getUsersDao().replace(user);
+
+            request.getRequestDispatcher("WEB-INF/profile.jsp").forward(request,response);
+
+        } catch (NullPointerException e) {
+
             response.sendRedirect("/profile");
         }
     }
