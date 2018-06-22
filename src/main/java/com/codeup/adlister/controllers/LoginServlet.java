@@ -25,7 +25,6 @@ public class LoginServlet extends HttpServlet {
         referingUrl = request.getHeader("Referer");
 
         request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
-
     }
 
 
@@ -34,7 +33,6 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         String pagename = (String) request.getSession().getAttribute("pagename");
         User user = DaoFactory.getUsersDao().findByUsername(username);
-
         if (user == null) {
             request.setAttribute("error", "Invalid username or password.");
             request.getSession().setAttribute("username", username);
